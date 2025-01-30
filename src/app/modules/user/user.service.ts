@@ -20,9 +20,10 @@ export class UserService {
     if (user) {
       throw new ConflictException('Email already linked to another account');
     }
-    let newUser = new this.UserRepository({ ...createUserDto });
-    newUser.passwordHash = await this.bcryptService.hash(createUserDto.password);
-    return await newUser.save();
+    return await this.UserRepository.create({
+      ...createUserDto,
+      passwordHash: await this.bcryptService.hash(createUserDto.password)
+    });
   }
 
   async findOneById(id: number): Promise<User> {
