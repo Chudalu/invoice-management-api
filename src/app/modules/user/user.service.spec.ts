@@ -43,11 +43,7 @@ describe('UserService', () => {
         }
       ],
       imports: [
-        UtilitiesModule,
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [AppConfig]
-        }),
+        UtilitiesModule,   
       ]
     }).compile();
 
@@ -68,7 +64,6 @@ describe('UserService', () => {
       password: 'plainPassword',
       role: RoleEnum.USER,
     });
-    console.log(newUser)
     expect(mockUserRepository.create).toHaveBeenCalled();
     expect(newUser).toHaveProperty('id');
     expect(newUser.userName).toBe('user');
