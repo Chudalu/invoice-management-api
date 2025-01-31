@@ -6,8 +6,6 @@ import { EntityStatus } from 'src/app/repository/enum/entity-status.enum';
 import { User } from './entities/user.entity';
 import { UtilitiesModule } from 'src/app/utilities/utilities.module';
 import { BcryptService } from 'src/app/utilities/services/bcrypt/bcrypt.service';
-import { ConfigModule } from '@nestjs/config';
-import { AppConfig } from 'src/app.config';
 import { ConflictException } from '@nestjs/common';
 
 describe('UserService', () => {

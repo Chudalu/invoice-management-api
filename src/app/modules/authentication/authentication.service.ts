@@ -32,7 +32,6 @@ export class AuthenticationService {
   
   async login(authenticateDto: AuthenticateDto, ipAddress: string): Promise<AuthTokensDto> {
     let user = await this.userService.findNotDeletedUserByEmail(authenticateDto.email);
-    if (user && !user.passwordHash) throw new BadRequestException('Email or Password is incorrect');
     if (!user || !(await this.bcryptService.compare(authenticateDto.password, user.passwordHash)))
       throw new UnauthorizedException('Email or Password is incorrect');
     if (user.status != EntityStatus.ACTIVE ) throw new UnauthorizedException('Account inactive');

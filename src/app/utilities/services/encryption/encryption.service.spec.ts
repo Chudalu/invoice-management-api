@@ -26,5 +26,5 @@ describe('EncryptionService', () => {
   it('should be decrypt', () => {
     let encrypted = service.encrypt(entry);
     expect(service.decrypt(encrypted)).toEqual(entry);
-  })
+  });
 });
