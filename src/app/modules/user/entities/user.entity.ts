@@ -37,7 +37,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
     @Column({
         type: DataType.STRING,
-        defaultValue: EntityStatus.INACTIVE
+        defaultValue: EntityStatus.ACTIVE
     })
     status: EntityStatus;
 
