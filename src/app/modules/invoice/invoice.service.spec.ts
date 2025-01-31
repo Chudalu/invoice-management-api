@@ -7,6 +7,7 @@ import { getModelToken } from '@nestjs/sequelize';
 import { RoleEnum } from 'src/app/repository/enum/role.enum';
 import { LoggedInUserDto } from '../authentication/dto/loggedin-user.dto';
 import { InvoiceDto } from './dto/invoice.dto';
+import { NotificationService } from '../notification/notification.service';
 
 describe('InvoiceService', () => {
   let service: InvoiceService;
@@ -40,11 +41,17 @@ describe('InvoiceService', () => {
     findByPk: jest.fn().mockResolvedValue(mockInvoice),
     update: jest.fn().mockImplementation((values, query) => mockInvoice),
   }
+  let mockNotificationService = {
+    notifyInvoiceStatus: jest.fn().mockImplementation((invoice) => invoice)
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         InvoiceService,
+        {
+          provide: NotificationService, useValue: mockNotificationService
+        },
         {
           provide: getModelToken(Invoice),
           useValue: mockInvoiceRepository

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
 import { AppConfig } from './app.config';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   let globalPrefix = 'api';
@@ -27,6 +28,15 @@ async function bootstrap() {
     .build();
   let document = SwaggerModule.createDocument(app, swaggerConfig, options);
   SwaggerModule.setup('docs', app, document);
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [AppConfig().RABBITMQ_URL],
+      queue: 'notifications',
+      queueOptions: { durable: false },
+    }
+  });
+  await app.startAllMicroservices();
   await app.listen(AppConfig().PORT, () => console.log('====== Server Running ======'));
 }
 bootstrap();

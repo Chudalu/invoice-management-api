@@ -17,15 +17,6 @@ export class Notification extends Model<InferAttributes<Notification>, InferCrea
     @Column(DataType.TEXT)
     message: string;
 
-    @Column(DataType.STRING)
-    type: NotificationTypeEnum;
-
-    @Column({
-        type: DataType.BOOLEAN,
-        defaultValue: false
-    })
-    isSent: boolean;
-
     @Column({
         type: DataType.STRING,
         defaultValue: EntityStatus.ACTIVE

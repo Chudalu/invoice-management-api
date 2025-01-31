@@ -5,3 +5,4 @@ export const PORT = 'PORT';
 export const JWT_SECRET = 'JWT_SECRET';
 export const CLIENT_ENCRYPTION_KEY = 'CLIENT_ENCRYPTION_KEY';
 export const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
+export const RABBITMQ_URL = 'RABBITMQ_URL';

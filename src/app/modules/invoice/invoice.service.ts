@@ -9,12 +9,14 @@ import { APIResponseDto } from 'src/app/repository/dto/api-response.dto';
 import { InvoiceQueryDto } from './dto/invoice-query.dto';
 import { InvoiceFilter } from './filter/invoice.filter';
 import { UpdateInvoiceStatusDto } from './dto/update-invoice-status.dto';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class InvoiceService {
 
   constructor(
-    @InjectModel(Invoice) private InvoiceRepository: typeof Invoice
+    @InjectModel(Invoice) private InvoiceRepository: typeof Invoice,
+    private notificationService: NotificationService,
   ) {}
 
   async createInvoice(user: LoggedInUserDto, createInvoiceDto: CreateInvoiceDto): Promise<InvoiceDto> {
@@ -45,7 +47,13 @@ export class InvoiceService {
 
   async updateInvoiceStatus(updateInvoice: UpdateInvoiceStatusDto): Promise<APIResponseDto> {
     await this.InvoiceRepository.update({ invoiceStatus: updateInvoice.invoiceStatus }, { where: { id: updateInvoice.id }});
+    this.notify(updateInvoice.id);
     return new APIResponseDto('Invoice status updated');
+  }
+
+  private async notify(id: number) {
+    let invoice = await this.findOneInvoice(id);
+    await this.notificationService.notifyInvoiceStatus(invoice);
   }
 
 }

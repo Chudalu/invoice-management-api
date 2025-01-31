@@ -14,6 +14,7 @@ import { AuthenticationGuard } from './app/middlewares/guards/auth/auth.guard';
 import { RolesGuard } from './app/middlewares/guards/roles/roles.guard';
 import { RepositoryModule } from './app/repository/repository.module';
 import { InvoiceModule } from './app/modules/invoice/invoice.module';
+import { NotificationModule } from './app/modules/notification/notification.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { InvoiceModule } from './app/modules/invoice/invoice.module';
     UserModule,
     InvoiceModule,
     RepositoryModule,
+    NotificationModule,
     AuthenticationModule,
   ],
   controllers: [AppController],
