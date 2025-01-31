@@ -25,9 +25,6 @@ export class Authentication extends Model<InferAttributes<Authentication>, Infer
     @Column(DataType.STRING)
     url: string;
 
-    @Column(DataType.BOOLEAN)
-    enabled: boolean;
-
     @Column({
         type: DataType.STRING,
         defaultValue: EntityStatus.ACTIVE
