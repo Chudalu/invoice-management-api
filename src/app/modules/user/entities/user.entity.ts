@@ -4,6 +4,7 @@ import { InferAttributes, InferCreationAttributes } from "sequelize";
 import { EntityStatus } from "src/app/repository/enum/entity-status.enum";
 import { RoleEnum } from "src/app/repository/enum/role.enum";
 import { Authentication } from "../../authentication/entities/authentication.entity";
+import { Invoice } from "../../invoice/entities/invoice.entity";
 
 @Table({
     freezeTableName: true,
@@ -54,4 +55,6 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     @HasOne(() => Authentication)
     authentication: Authentication;
 
+    @HasMany(() => Invoice)
+    invoices: Invoice[];
 }

@@ -13,6 +13,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './app/middlewares/guards/auth/auth.guard';
 import { RolesGuard } from './app/middlewares/guards/roles/roles.guard';
 import { RepositoryModule } from './app/repository/repository.module';
+import { InvoiceModule } from './app/modules/invoice/invoice.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { RepositoryModule } from './app/repository/repository.module';
     ScheduleModule.forRoot(),
     JobsModule,
     UserModule,
+    InvoiceModule,
     RepositoryModule,
     AuthenticationModule,
   ],
