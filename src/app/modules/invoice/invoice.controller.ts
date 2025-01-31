@@ -17,7 +17,7 @@ export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
 
   @Post()
-  async create(@Req() request: Request, @Body() createInvoiceDto: CreateInvoiceDto): Promise<InvoiceDto> {
+  async createInvoice(@Req() request: Request, @Body() createInvoiceDto: CreateInvoiceDto): Promise<InvoiceDto> {
     let user: LoggedInUserDto = request['user'];
     return await this.invoiceService.createInvoice(user, createInvoiceDto);
   }
@@ -34,7 +34,7 @@ export class InvoiceController {
 
   @Roles([RoleEnum.USER])
   @Patch(':id')
-  async update(@Req() request: Request, @Param('id', new ParseIntPipe()) id: number, @Body() updateInvoiceDto: UpdateInvoiceDto) {
+  async updateInvoice(@Req() request: Request, @Param('id', new ParseIntPipe()) id: number, @Body() updateInvoiceDto: UpdateInvoiceDto) {
     let user: LoggedInUserDto = request['user'];
     return await this.invoiceService.update(user, id, updateInvoiceDto);
   }

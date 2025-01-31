@@ -6,7 +6,6 @@ import { Invoice } from './entities/invoice.entity';
 import { InvoiceDto } from './dto/invoice.dto';
 import { LoggedInUserDto } from '../authentication/dto/loggedin-user.dto';
 import { APIResponseDto } from 'src/app/repository/dto/api-response.dto';
-import { InvoiceStatus } from './enum/invoice-status.enum';
 import { InvoiceQueryDto } from './dto/invoice-query.dto';
 import { InvoiceFilter } from './filter/invoice.filter';
 import { UpdateInvoiceStatusDto } from './dto/update-invoice-status.dto';

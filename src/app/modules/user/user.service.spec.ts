@@ -56,7 +56,7 @@ describe('UserService', () => {
   it('should create a new user', async () => {
     jest.spyOn(bcryptService, 'hash').mockResolvedValue('hashedpassword');
 
-    const newUser = await service.create({
+    let newUser = await service.create({
       userName: 'user',
       email: 'user@email.com',
       password: 'plainPassword',
