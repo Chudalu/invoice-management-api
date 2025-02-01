@@ -3,6 +3,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { ROLES_KEY } from 'src/app/repository/constants/roles-decorator.constants';
 import { LoggedInUserDto } from 'src/app/modules/authentication/dto/loggedin-user.dto';
 import { RoleEnum } from 'src/app/repository/enum/role.enum';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -15,7 +16,9 @@ export class RolesGuard implements CanActivate {
       context.getClass(),
     ]);
     if (!requiredRoles || requiredRoles.length == 0) return true;
-    let user: LoggedInUserDto = context.switchToHttp().getRequest()['user'];
+    let ctx = GqlExecutionContext.create(context);
+    let user: LoggedInUserDto = context.switchToHttp().getRequest() ? context.switchToHttp().getRequest()['user'] : ctx.getContext().user;
+    if (!user) return false;
     return requiredRoles.some((role) => user.role == role);
   }
 }
