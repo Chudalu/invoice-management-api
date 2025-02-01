@@ -1,0 +1,17 @@
+type InvoiceReportDto {
+  totalInvoices: Int
+  paidInvoices: Int
+  unpaidInvoices: Int
+  declinedInvoices: Int
+}
+
+type UserReportDto {
+  totalUsers: Int
+  clients: Int
+  admins: Int
+}
+
+type Query {
+  getInvoiceReport: InvoiceReportDto
+  getUserReport: UserReportDto
+}

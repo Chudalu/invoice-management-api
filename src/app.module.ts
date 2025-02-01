@@ -15,6 +15,10 @@ import { RolesGuard } from './app/middlewares/guards/roles/roles.guard';
 import { RepositoryModule } from './app/repository/repository.module';
 import { InvoiceModule } from './app/modules/invoice/invoice.module';
 import { NotificationModule } from './app/modules/notification/notification.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ReportsModule } from './app/modules/reports/reports.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -33,10 +37,21 @@ import { NotificationModule } from './app/modules/notification/notification.modu
       synchronize: true,
       logging: false,
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      typePaths: ['./src/**/*.graphql'],
+      driver: ApolloDriver,
+      path: '/graphql',
+      playground: true, 
+      introspection: true,
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.schema.ts'),
+      },
+    }),
     ScheduleModule.forRoot(),
     JobsModule,
     UserModule,
     InvoiceModule,
+    ReportsModule,
     RepositoryModule,
     NotificationModule,
     AuthenticationModule,
