@@ -47,7 +47,8 @@ import { join } from 'path';
         path: join(process.cwd(), 'src/graphql.schema.ts'),
       },
       context: ({ req }) => {
-        return { user: req.user };
+        let token = req.headers.authorization;
+        return { token };
       },
     }),
     ScheduleModule.forRoot(),

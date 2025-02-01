@@ -32,7 +32,6 @@ export class InvoiceController {
     return await this.invoiceService.findOneInvoice(id);
   }
 
-  @Roles([RoleEnum.USER])
   @Patch(':id')
   async updateInvoice(@Req() request: Request, @Param('id', new ParseIntPipe()) id: number, @Body() updateInvoiceDto: UpdateInvoiceDto) {
     let user: LoggedInUserDto = request['user'];
@@ -40,8 +39,8 @@ export class InvoiceController {
   }
 
   @Roles([RoleEnum.ADMIN])
-  @Patch('status')
-  async updateInvoiceStatus(@Body() updateInvoiceStatus: UpdateInvoiceStatusDto) {
-    return await this.invoiceService.updateInvoiceStatus(updateInvoiceStatus);
+  @Patch('status/:id')
+  async updateInvoiceStatus(@Param('id', new ParseIntPipe()) id: number, @Body() updateInvoiceStatus: UpdateInvoiceStatusDto) {
+    return await this.invoiceService.updateInvoiceStatus(id, updateInvoiceStatus);
   }
 }

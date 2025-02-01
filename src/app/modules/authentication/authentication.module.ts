@@ -14,5 +14,6 @@ import { AppConfig } from 'src/app.config';
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService],
+  exports: [AuthenticationService]
 })
 export class AuthenticationModule {}

@@ -5,7 +5,6 @@ import { InvoiceReportDto } from '../dto/invoice-report.dto';
 import { Roles } from 'src/app/repository/constants/roles-decorator.constants';
 import { RoleEnum } from 'src/app/repository/enum/role.enum';
 
-@Public()
 @Roles([RoleEnum.ADMIN])
 @Resolver(() => InvoiceReportDto)
 export class InvoiceReportResolver {

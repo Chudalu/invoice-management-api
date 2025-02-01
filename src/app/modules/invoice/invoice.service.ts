@@ -45,9 +45,9 @@ export class InvoiceService {
     return new APIResponseDto('Invoice updated');
   }
 
-  async updateInvoiceStatus(updateInvoice: UpdateInvoiceStatusDto): Promise<APIResponseDto> {
-    await this.InvoiceRepository.update({ invoiceStatus: updateInvoice.invoiceStatus }, { where: { id: updateInvoice.id }});
-    this.notify(updateInvoice.id);
+  async updateInvoiceStatus(id: number, updateInvoice: UpdateInvoiceStatusDto): Promise<APIResponseDto> {
+    await this.InvoiceRepository.update({ invoiceStatus: updateInvoice.invoiceStatus }, { where: { id }});
+    this.notify(id);
     return new APIResponseDto('Invoice status updated');
   }
 

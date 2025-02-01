@@ -8,6 +8,7 @@ import { Request } from 'express';
 import { EntityStatus } from 'src/app/repository/enum/entity-status.enum';
 import { CLIENT_ENCRYPTION_KEY, JWT_SECRET } from 'src/app/repository/constants/env-variables.constants';
 import { EncryptionService } from 'src/app/utilities/services/encryption/encryption.service';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
@@ -22,14 +23,15 @@ export class AuthenticationGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     let isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [context.getHandler(), context.getClass()]);
     if (isPublic) return true;
-    let request = context.switchToHttp().getRequest();
-    let token = this.extractTokenFromHeader(request);
+    let request = context.switchToHttp().getRequest() ? context.switchToHttp().getRequest() : GqlExecutionContext.create(context);
+    let token = context.switchToHttp().getRequest() ? this.extractTokenFromHeader(request) : this.extractTokenFromCtx(request.getContext().token);
     if (!token) throw new UnauthorizedException('Unauthenticated');
     try {
-      let { account, channel } = await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>(JWT_SECRET) });
+      let { account } = await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>(JWT_SECRET) });
       let loggedInUser: LoggedInUserDto = JSON.parse(this.santizeJSONString(this.encryptionService.decrypt(account, this.configService.getOrThrow<string>(CLIENT_ENCRYPTION_KEY))));
       if (loggedInUser.status != EntityStatus.ACTIVE) throw new UnauthorizedException('Inactive account');
-      request['user'] = loggedInUser;
+      if (context.switchToHttp().getRequest()) request['user'] = loggedInUser;
+      else request.getContext()['user'] = loggedInUser;
     } catch {
       throw new UnauthorizedException('Unauthenticated');
     }
@@ -38,6 +40,11 @@ export class AuthenticationGuard implements CanActivate {
 
   private extractTokenFromHeader(request: Request): string | undefined {
     let [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
+  }
+
+  private extractTokenFromCtx(tkn: string): string | undefined {
+    let [type, token] = tkn.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
 
