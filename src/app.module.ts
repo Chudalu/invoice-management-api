@@ -19,9 +19,14 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ReportsModule } from './app/modules/reports/reports.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 60000,
+    }),
     JwtModule.register({
       global: true,
       secret: AppConfig().JWT_SECRET,
