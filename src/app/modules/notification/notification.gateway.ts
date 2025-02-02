@@ -7,7 +7,7 @@ export class NotificationGateway {
   @WebSocketServer()
   server: Server;
 
-  sendInvoiceUpdate(userId: string, data: NotificationMessageDto) {
-    this.server.to(userId).emit('invoice.status.update', data);
+  sendInvoiceUpdate(data: NotificationMessageDto) {
+    this.server.emit('invoice.status.update', data);
   }
 }

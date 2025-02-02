@@ -9,7 +9,6 @@ export class NotificationController {
 
   @EventPattern('invoice.status.updated')
   async handleInvoiceUpdate(data: NotificationMessageDto) {
-    console.log('received rabbitMQ notification ==========', data);
-    this.notificationGateway.sendInvoiceUpdate(String(data.userId), data);
+    this.notificationGateway.sendInvoiceUpdate(data);
   }
 }
