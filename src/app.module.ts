@@ -30,7 +30,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     JwtModule.register({
       global: true,
       secret: AppConfig().JWT_SECRET,
-      signOptions: { expiresIn: '30m' },
+      signOptions: { expiresIn: '60m' },
     }),
     ConfigModule.forRoot({
       isGlobal: true,

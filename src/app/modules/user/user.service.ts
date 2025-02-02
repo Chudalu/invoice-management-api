@@ -6,6 +6,7 @@ import { EntityStatus } from 'src/app/repository/enum/entity-status.enum';
 import { BcryptService } from 'src/app/utilities/services/bcrypt/bcrypt.service';
 import { User } from './entities/user.entity';
 import { UserDto } from './dto/user.dto';
+import { OrderDirectionEnum } from 'src/app/repository/enum/order-direction.enum';
 
 @Injectable()
 export class UserService {
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   async findAll() {
-    let users = await this.UserRepository.findAll();
+    let users = await this.UserRepository.findAll({ order: [['createdAt', OrderDirectionEnum.ASC]] });
     return users.map(u => new UserDto(u));
   }
 }

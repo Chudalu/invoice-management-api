@@ -24,7 +24,7 @@ export class AuthenticationGuard implements CanActivate {
     let isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [context.getHandler(), context.getClass()]);
     if (isPublic) return true;
     let request = context.switchToHttp().getRequest() ? context.switchToHttp().getRequest() : GqlExecutionContext.create(context);
-    let token = context.switchToHttp().getRequest() ? this.extractTokenFromHeader(request) : this.extractTokenFromCtx(request.getContext().token);
+    let token = context.switchToHttp().getRequest() ? this.extractTokenFromHeader(request) : (request.getContext().token ? this.extractTokenFromCtx(request.getContext().token) : null);
     if (!token) throw new UnauthorizedException('Unauthenticated');
     try {
       let { account } = await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>(JWT_SECRET) });

@@ -8,6 +8,9 @@ import { AuthenticationResponseDto } from './dto/authentication-response.dto';
 import { LoggedInUserDto } from './dto/loggedin-user.dto';
 import * as requestIp from 'request-ip';
 import { ApiTags, ApiExtraModels } from '@nestjs/swagger';
+import { Roles } from 'src/app/repository/constants/roles-decorator.constants';
+import { RoleEnum } from 'src/app/repository/enum/role.enum';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 
 @ApiTags('Authentication')
 @ApiExtraModels(LoggedInUserDto)
@@ -38,6 +41,12 @@ export class AuthenticationController {
     let { jwtToken, authenticationToken } = await this.authenticationService.refreshAuthentication(oldAuthenticationToken, ipAddress);
     this.setAuthenticationCookie(response, authenticationToken);
     return new AuthenticationResponseDto(jwtToken);
+  }
+
+  @Roles([RoleEnum.ADMIN])
+  @Post('register')
+  async registerUser(@Body() createUserDto: CreateUserDto): Promise<APIResponseDto> {
+    return await this.authenticationService.register(createUserDto);
   }
 
   @Get('logout')

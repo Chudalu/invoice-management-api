@@ -8,6 +8,7 @@ export class UserDto {
     email: string;
     role: RoleEnum;
     status: EntityStatus;
+    createdAt: Date;
 
     constructor(user: User) {
         this.id = Number(user.id);
@@ -15,5 +16,6 @@ export class UserDto {
         this.email = user.email;
         this.role = user.role;
         this.status = user.status;
+        this.createdAt = user.createdAt;
     }
 }

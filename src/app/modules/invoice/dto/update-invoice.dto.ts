@@ -1,5 +1,4 @@
-import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
-import { InvoiceStatus } from "../enum/invoice-status.enum";
+import { IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class UpdateInvoiceDto {
 
@@ -11,7 +10,7 @@ export class UpdateInvoiceDto {
     @IsOptional()
     title?: string;
 
-    @IsNumber()
+    @IsNumberString()
     @IsOptional()
     amount?: number;
 

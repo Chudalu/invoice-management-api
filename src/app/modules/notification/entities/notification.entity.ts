@@ -1,7 +1,6 @@
 import { AutoIncrement, Column, CreatedAt, DataType, ForeignKey, Model, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 import { User } from "../../user/entities/user.entity";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
-import { NotificationTypeEnum } from "src/app/repository/enum/notification-type.enum";
 import { EntityStatus } from "src/app/repository/enum/entity-status.enum";
 
 @Table({

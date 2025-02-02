@@ -10,6 +10,7 @@ import { InvoiceQueryDto } from './dto/invoice-query.dto';
 import { InvoiceFilter } from './filter/invoice.filter';
 import { UpdateInvoiceStatusDto } from './dto/update-invoice-status.dto';
 import { NotificationService } from '../notification/notification.service';
+import { OrderDirectionEnum } from 'src/app/repository/enum/order-direction.enum';
 
 @Injectable()
 export class InvoiceService {
@@ -30,6 +31,7 @@ export class InvoiceService {
       where: { ...filter },
       limit: query.limit ? query.limit : 100,
       offset: query.offset ? query.offset : 0,
+      order: [['createdAt', OrderDirectionEnum.ASC]],
     });
     return invoices.map(i => new InvoiceDto(i));
   }

@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class CreateInvoiceDto {
 
@@ -9,7 +9,7 @@ export class CreateInvoiceDto {
     @IsOptional()
     notes: string;
 
-    @IsNumber()
+    @IsNumberString()
     amount: number;
     
 }
