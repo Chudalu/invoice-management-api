@@ -111,7 +111,7 @@ cd invoice-management-app
 
 ### **2⃣ Backend Setup (NestJS)**
 ```bash
-cd backend
+cd invoice-managment-api
 npm install
 ```
 
@@ -143,7 +143,7 @@ Access the RabbitMQ management UI at **`http://localhost:15672`**
 
 ### **4⃣ Frontend Setup (Next.js)**
 ```bash
-cd frontend
+cd invoice-management-app
 npm install
 ```
 
