@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNotificationDto } from './dto/create-notification.dto';
-import { UpdateNotificationDto } from './dto/update-notification.dto';
 import { ClientProxy, ClientProxyFactory, RmqOptions, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { RABBITMQ_URL } from 'src/app/repository/constants/env-variables.constants';
